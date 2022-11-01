@@ -3,6 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/Header";
+import PostContainer from "../components/PostContainer";
 import SinglePost from "../components/SinglePost";
 import { sanityClient, urlFor } from "../sanity";
 import { Post } from "../typings";
@@ -38,12 +39,7 @@ export default function Home({ posts }: Props) {
                     <img src="https://accountabilitylab.org/wp-content/uploads/2020/03/Medium-logo.png" />
                 </div>
             </div>
-            {/* Posts */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 p-2 lg:p-6">
-                {posts.map((post) => (
-                    <SinglePost post={post} key={post._id} />
-                ))}
-            </div>
+            <PostContainer posts={posts} />
         </div>
     );
 }
