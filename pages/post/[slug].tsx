@@ -68,6 +68,14 @@ function Post({ post }: Props) {
                                     {children}
                                 </a>
                             ),
+                            image: (props: any) => {
+                                return (
+                                    <img
+                                        src={urlFor(props.asset).url()!}
+                                        alt=""
+                                    ></img>
+                                );
+                            },
                         }}
                     />
                 </div>
