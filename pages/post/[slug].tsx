@@ -3,12 +3,39 @@ import PortableText from "react-portable-text";
 import Header from "../../components/Header";
 import { sanityClient, urlFor } from "../../sanity";
 import { Post } from "../../typings";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 interface Props {
     post: Post;
 }
 
+interface IFormInput {
+    _id: string;
+    name: string;
+    email: string;
+    comment: string;
+}
+
 function PostPage({ post }: Props) {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<IFormInput>();
+
+    const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+        await fetch("/api/createComment", {
+            method: "POST",
+            body: JSON.stringify(data),
+        })
+            .then(() => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     return (
         <main>
             <Header />
@@ -97,6 +124,73 @@ function PostPage({ post }: Props) {
                     />
                 </div>
             </article>
+            <hr className="max-w-lg my-5 mx-auto border-green-500" />
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col p-5 my-10 max-w-2xl mx-auto mb-10"
+            >
+                <h3 className="text-sm text-green-500">
+                    Enjoyed this article?
+                </h3>
+                <h4 className="text-3xl font-bold">Leave a comment below!</h4>
+                <hr className="py-3 mt-2" />
+
+                <input
+                    {...register("_id")}
+                    type="hidden"
+                    name="_id"
+                    value={post._id}
+                />
+
+                <label className="block mb-5">
+                    <span className="text-gray-700">Name</span>
+                    <input
+                        {...register("name", { required: true })}
+                        className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-green-500 outline-none focus:ring ring-0"
+                        placeholder="John Doe"
+                        type="text"
+                    />
+                </label>
+                <label className="block mb-5">
+                    <span className="text-gray-700">Email</span>
+                    <input
+                        {...register("email", { required: true })}
+                        className="shadow border rounded py-2 px-3 form-input mt-1 block w-full ring-green-500 outline-none focus:ring ring-0"
+                        placeholder="john@example.com"
+                        type="email"
+                    />
+                </label>
+                <label className="block mb-5">
+                    <span className="text-gray-700">Comment</span>
+                    <textarea
+                        {...register("comment", { required: true })}
+                        className="shadow border rounded py-2 px-3 form-textarea mt-1 block w-full ring-green-500 outline-none focus:ring ring-0"
+                        placeholder="I thought the article was great!"
+                        rows={8}
+                    />
+                </label>
+                <div className="flex flex-col p-5">
+                    {errors.name && (
+                        <span className="text-red-500">
+                            The name field is required.
+                        </span>
+                    )}
+                    {errors.email && (
+                        <span className="text-red-500">
+                            The email field is required.
+                        </span>
+                    )}
+                    {errors.comment && (
+                        <span className="text-red-500">
+                            The comment field is required.
+                        </span>
+                    )}
+                </div>
+                <input
+                    type="submit"
+                    className="bg-green-500 hover:bg-green-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer"
+                />
+            </form>
         </main>
     );
 }
