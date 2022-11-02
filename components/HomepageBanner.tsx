@@ -2,7 +2,7 @@ function HomepageBanner() {
     return (
         <div className="flex justify-between items-center h-60 bg-green-500 border-y border-black py-10 lg:py-0">
             <div className="px-10 space-y-5">
-                <h1 className="text-6xl max-w-xl font-serif">
+                <h1 className="text-3xl max-w-xl font-serif md:text-4xl lg:text-6xl">
                     My journey as a software developer
                 </h1>
                 <h2>
