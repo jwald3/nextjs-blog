@@ -8,7 +8,7 @@ interface Props {
     post: Post;
 }
 
-function Post({ post }: Props) {
+function PostPage({ post }: Props) {
     return (
         <main>
             <Header />
@@ -24,7 +24,7 @@ function Post({ post }: Props) {
                 </h2>
                 <div className="flex items-center space-x-2">
                     <img
-                        className="h-10 w-10 rounded-full"
+                        className="h-10 w-10 rounded-full m-2"
                         src={urlFor(post.author.image).url()!}
                         alt=""
                     />
@@ -57,6 +57,12 @@ function Post({ post }: Props) {
                                     {...props}
                                 />
                             ),
+                            h4: (props: any) => (
+                                <h4
+                                    className="text-l font-bold my-5"
+                                    {...props}
+                                />
+                            ),
                             li: ({ children }: any) => (
                                 <li className="ml4 list-disc">{children}</li>
                             ),
@@ -68,14 +74,25 @@ function Post({ post }: Props) {
                                     {children}
                                 </a>
                             ),
+
+                            blockquote: (props: any) => (
+                                <blockquote
+                                    className="text-s mb-5 ml-5 font-extralight text-gray-500"
+                                    {...props}
+                                />
+                            ),
                             image: (props: any) => {
                                 return (
                                     <img
+                                        className="mt-10 mb-2 mx-auto"
                                         src={urlFor(props.asset).url()!}
                                         alt=""
                                     ></img>
                                 );
                             },
+                            normal: (props: any) => (
+                                <p className="text-m my-5" {...props} />
+                            ),
                         }}
                     />
                 </div>
@@ -84,7 +101,7 @@ function Post({ post }: Props) {
     );
 }
 
-export default Post;
+export default PostPage;
 
 export const getStaticPaths = async () => {
     const query = `*[_type == "post"]{
