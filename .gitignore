@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+nextjs-blog/node_modules
+nextjs-blog/dist
+
 # testing
 /coverage
 
