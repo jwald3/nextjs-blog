@@ -72,7 +72,7 @@ function PostPage({ post }: Props) {
 
                 <div className="mt-10">
                     <PortableText
-                        dataset={process.env.NEXT_PULIC_SANITY_DATASET}
+                        dataset={process.env.NEXT_PUBLIC_SANITY_DATASET}
                         projectId={process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}
                         content={post.body}
                         className=""
