@@ -9,7 +9,7 @@ interface Props {
 function SinglePost({ post }: Props) {
     return (
         <Link key={post._id} href={`/post/${post.slug.current}`}>
-            <div className="border rounded-lg group cursor-pointer overflow-hidden h-full">
+            <div className="border rounded-lg group cursor-pointer overflow-hidden h-full shadow-md">
                 <img
                     className="w-full h-60 object-cover group-hover:scale-105 transition-transform duration-200 ease-in-out"
                     src={urlFor(post.mainImage).url()!}
